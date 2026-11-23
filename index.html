@@ -183,6 +183,20 @@ section.block{padding:70px 0}
 .about h2{font-size:clamp(28px,3.8vw,44px);line-height:1.08;margin:10px 0 16px}
 .about p{margin:0 0 12px;color:var(--ink-2);max-width:48ch}
 
+/* меню на телефоне */
+.burger{display:none;width:42px;height:42px;border:0;border-radius:50%;background:rgba(27,42,46,.07);cursor:pointer;padding:0;flex:none;position:relative}
+.burger i{position:absolute;left:12px;right:12px;height:2px;border-radius:2px;background:var(--ink);transition:transform .25s,opacity .2s}
+.burger i:nth-child(1){top:14px}.burger i:nth-child(2){top:20px}.burger i:nth-child(3){top:26px}
+.burger[aria-expanded="true"] i:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.burger[aria-expanded="true"] i:nth-child(2){opacity:0}
+.burger[aria-expanded="true"] i:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.menu{position:fixed;z-index:29;left:12px;right:12px;top:calc(72px + env(safe-area-inset-top));background:rgba(255,255,255,.97);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-radius:24px;padding:10px;box-shadow:0 24px 50px -20px rgba(27,42,46,.45),0 0 0 1px rgba(27,42,46,.06);display:grid}
+.menu[hidden]{display:none}
+.menu a{text-decoration:none;font:600 18px/1.2 var(--body);padding:16px 18px;border-radius:16px}
+.menu a:active,.menu a:hover{background:var(--teal-l)}
+@media(max-width:759px){.burger{display:block}.nav{padding-left:10px;gap:4px}.nav .brand{font-size:14px;margin-right:2px;gap:6px}.nav .btn{padding:10px 14px}}
+@media(min-width:760px){.menu{display:none!important}}
+
 /* единый шрифт заголовков блоков */
 .block-head h2,.final h2{font-family:"Unbounded",var(--display);font-weight:600;font-size:clamp(24px,3.1vw,38px);line-height:1.18;letter-spacing:-.02em}
 .block-head h2 em,.final h2 em{font-size:1.08em}
@@ -264,7 +278,11 @@ footer{padding:22px 0 calc(40px + env(safe-area-inset-bottom));color:var(--ink-3
   <a class="brand" href="#top"><i id="brandInit"></i><span id="brandName"></span></a>
   <a class="l" href="#works">Работы</a><a class="l" href="#services">Стоимость</a>
   <a class="btn btn-main" href="#write">Написать</a>
+  <button class="burger" id="burger" type="button" aria-label="Меню" aria-expanded="false" aria-controls="menu"><i></i><i></i><i></i></button>
 </nav>
+<div class="menu" id="menu" hidden>
+  <a href="#works">Работы</a><a href="#quiz">Подбор за минуту</a><a href="#services">Стоимость</a><a href="#how">Как работаю</a><a href="#faq">Частые вопросы</a><a href="#write">Написать</a>
+</div>
 
 <main class="wrap" id="top">
   <section class="hero">
@@ -511,6 +529,12 @@ footer{padding:22px 0 calc(40px + env(safe-area-inset-bottom));color:var(--ink-3
   const fitAll = () => document.querySelectorAll('[data-shift]').forEach((img) => { img.style.removeProperty('--shift'); fit(img); });
   document.querySelectorAll('[data-shift]').forEach((img) => { if (img.complete) fit(img); else img.addEventListener('load', () => fit(img)); });
   addEventListener('resize', fitAll);
+  const burger = $('burger'), menu = $('menu');
+  const setMenu = (open) => { menu.hidden = !open; burger.setAttribute('aria-expanded', String(open)); };
+  burger.addEventListener('click', (e) => { e.stopPropagation(); setMenu(menu.hidden); });
+  menu.addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
+  document.addEventListener('click', (e) => { if (!menu.hidden && !e.target.closest('.nav')) setMenu(false); });
+  addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
   $('worksAcc').addEventListener('toggle', () => setTimeout(fitAll, 150));
   const io = new IntersectionObserver((es) => es.forEach((e) => {
     if (e.target.classList.contains('phone')) e.target.classList.toggle('live', e.isIntersecting);
