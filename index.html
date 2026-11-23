@@ -13,7 +13,7 @@
 <meta name="theme-color" content="#FAF6F0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geologica:wght@500;600;700&family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geologica:wght@500;600;700&family=Onest:wght@400;500;600;700&family=Unbounded:wght@500;600&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
 <style>
 /* Витрина Ирины: светлая песочно-бирюзовая гамма (по мотивам любимого стиля), структура как в скилле «Моя витрина». --accent:#2F54EB; --ink:#14151A; --soft:#F1F3FA; */
 :root{
@@ -55,9 +55,16 @@ h1,h2,h3{font-family:var(--display);font-weight:600;letter-spacing:-.025em;margi
 .hello{display:inline-flex;align-items:center;gap:12px;background:#fff;border-radius:999px;padding:6px 18px 6px 6px;font-weight:500;box-shadow:0 0 0 1px var(--line)}
 .hello img,.hello b{width:44px;height:44px;border-radius:50%;object-fit:cover;flex:none}
 .hello b{background:var(--teal);color:#fff;display:grid;place-items:center;font:700 16px/1 var(--display)}
-.hero h1{font-size:clamp(34px,5vw,60px);line-height:1.05;margin:22px 0 0}
-.hero h1 em{font-style:normal;color:var(--accent)}
-.lead{font-size:clamp(17px,1.8vw,20px);color:var(--ink-2);max-width:36ch;margin:20px 0 0}
+.hero h1{font:600 clamp(30px,4.4vw,58px)/1.12 "Unbounded",var(--display);letter-spacing:-.03em;margin:22px 0 0;overflow-wrap:break-word}
+.hero h1 em,.lead em{font-family:"Playfair Display",Georgia,serif;font-style:italic;font-weight:600;color:var(--accent);letter-spacing:0}
+.hero h1 em{font-size:1.12em;display:inline-block;margin-top:.1em}
+.lead{font-size:clamp(17px,1.8vw,21px);color:var(--ink-2);max-width:34ch;margin:22px 0 0;line-height:1.7}
+.lead em{font-size:1.05em}
+.hero .eyebrow{display:block;color:var(--teal-d)}
+.pill{display:inline-flex;flex-wrap:wrap;gap:6px 22px;margin-top:28px;padding:16px 26px;border-radius:999px;background:rgba(255,255,255,.8);box-shadow:0 0 0 1px var(--line);font:500 16px/1.3 var(--body);color:var(--ink)}
+.pill b{font-weight:700;color:var(--accent)}
+.btn-dark{background:var(--teal-d);color:#fff}
+.btn-dark:hover{background:var(--teal);transform:translateY(-2px)}
 .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
 .facts{display:flex;flex-wrap:wrap;gap:8px 30px;margin-top:32px;color:var(--ink-2);font-size:15px}
 .facts b{font:600 26px/1 var(--display);color:var(--ink);display:block;margin-bottom:6px}
@@ -79,6 +86,18 @@ h1,h2,h3{font-family:var(--display);font-weight:600;letter-spacing:-.025em;margi
 .fan .phone:nth-child(1){--pw:clamp(190px,21vw,262px);transform:translate(-50%,-50%);z-index:3}
 .fan .phone:nth-child(2){--pw:clamp(150px,16vw,206px);transform:translate(-120%,-42%) rotate(-8deg);z-index:2}
 .fan .phone:nth-child(3){--pw:clamp(150px,16vw,206px);transform:translate(20%,-40%) rotate(8deg);z-index:1}
+/* первый экран: ноутбук + телефон поверх */
+.fan{height:auto}
+.fan::before{display:none}
+.hmock{position:relative;padding-bottom:36px;max-width:640px;margin:0 auto}
+.hlid{background:#16191A;border-radius:16px 16px 6px 6px;padding:12px 12px 14px;box-shadow:0 40px 60px -30px rgba(31,38,34,.55)}
+.hscr{position:relative;aspect-ratio:16/10;border-radius:6px;overflow:hidden;background:#fff}
+.hscr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;opacity:0;transition:opacity 1s}
+.hscr img.on{opacity:1}
+.hcap{position:absolute;left:10px;bottom:10px;z-index:2;background:rgba(20,24,26,.78);color:#fff;font:500 12px/1 var(--body);padding:7px 12px;border-radius:999px}
+.hbase{height:14px;margin:0 -4%;background:linear-gradient(#CFD2CF,#9DA19E);border-radius:0 0 18px 18px}
+.fan .phone.hphone{position:absolute;top:auto;left:auto;right:-6px;bottom:0;--pw:clamp(104px,13vw,165px);width:var(--pw);transform:none;z-index:3}
+.hphone .screen img{opacity:1}
 .fan.empty{display:grid;place-items:center;color:var(--ink-3);text-align:center}
 
 /* работы */
@@ -112,13 +131,64 @@ section.block{padding:70px 0}
 .open{margin-top:24px;background:var(--teal);color:#fff}
 .open:hover{background:var(--teal-d);transform:translateY(-2px)}
 
+/* заголовки блоков: акцентные слова как на первом экране */
+.block-head h2 em,.final h2 em{font-family:"Playfair Display",Georgia,serif;font-style:italic;font-weight:600;color:var(--accent);letter-spacing:0}
+.hl{font-weight:700;color:var(--accent)}
+
+/* зачем сайт */
+.why{display:grid;gap:16px;grid-template-columns:1fr}
+@media(min-width:640px){.why{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:960px){.why{grid-template-columns:repeat(3,1fr)}}
+.why>div{background:rgba(255,255,255,.78);border-radius:var(--r);padding:28px 26px;box-shadow:0 0 0 1px var(--line),0 18px 36px -30px rgba(27,42,46,.45)}
+.why span.n{font:600 14px/1 var(--display);color:var(--accent);letter-spacing:.04em}
+.why h3{font-size:19px;line-height:1.2;margin:14px 0 8px}
+.why p{margin:0;font-size:15.5px;color:var(--ink-2)}
+
+/* подбор за минуту */
+.quiz{display:grid;gap:18px}
+@media(min-width:900px){.quiz{grid-template-columns:1.2fr 1fr}}
+.panel{background:rgba(255,255,255,.78);border-radius:var(--r);padding:28px;box-shadow:0 0 0 1px var(--line)}
+.q{margin-bottom:24px}.q:last-child{margin-bottom:0}
+.q h3{font:600 15.5px/1.3 var(--body);letter-spacing:0;margin-bottom:12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:10px 16px;min-height:42px;border-radius:999px;border:0;background:#fff;box-shadow:inset 0 0 0 1px var(--line);font:500 14.5px/1.2 var(--body);color:var(--ink);cursor:pointer;transition:background .2s,color .2s}
+.chip:hover{box-shadow:inset 0 0 0 1.5px var(--teal)}
+.chip[aria-pressed="true"]{background:var(--accent);color:#fff;box-shadow:none}
+.result{display:flex;flex-direction:column;gap:14px;background:var(--teal-d);color:#F3EEE3;border-radius:var(--r);padding:30px;align-self:start}
+@media(min-width:900px){.result{position:sticky;top:90px}}
+.result h3{font-size:clamp(20px,2.2vw,25px);line-height:1.2;color:#fff}
+.result p{margin:0;color:#CFC9BC;font-size:15.5px}
+.result .sum{font:600 28px/1 var(--display);color:#F2A58F}
+.result .btn-main{align-self:flex-start}
+.result .ex{color:#F2A58F;font-weight:600}
+
+/* работы в раскрывающемся блоке */
+.acc{margin-top:6px}
+.acc>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 28px;border-radius:999px;background:var(--teal-d);color:#fff;font:600 17px/1.2 var(--body);transition:background .2s}
+.acc>summary::-webkit-details-marker{display:none}
+.acc>summary:hover{background:var(--teal)}
+.acc>summary .cnt{font-weight:500;opacity:.7;font-size:15px}
+.acc>summary::after{content:"";width:12px;height:12px;border-right:2.5px solid #fff;border-bottom:2.5px solid #fff;transform:rotate(45deg) translate(-3px,-3px);transition:transform .3s;flex:none}
+.acc[open]>summary::after{transform:rotate(-135deg) translate(-3px,-3px)}
+.acc .t2{display:none}.acc[open] .t1{display:none}.acc[open] .t2{display:inline}
+.acc>#casesMore{margin-top:26px}
+
+/* обо мне */
+.about{display:grid;gap:28px;align-items:center;background:rgba(255,255,255,.78);border-radius:32px;padding:28px 22px;box-shadow:0 0 0 1px var(--line)}
+@media(min-width:820px){.about{grid-template-columns:.7fr 1.3fr;gap:56px;padding:48px 56px}}
+.about .ph{border-radius:28px;overflow:hidden;aspect-ratio:1;max-width:380px;width:100%;justify-self:center;box-shadow:0 30px 50px -30px rgba(27,42,46,.5)}
+.about .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.about h2{font-size:clamp(28px,3.8vw,44px);line-height:1.08;margin:10px 0 16px}
+.about p{margin:0 0 12px;color:var(--ink-2);max-width:48ch}
+
 /* услуги */
 .price{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
 .price li{display:grid;gap:6px 30px;padding:26px 0;border-bottom:1px solid var(--line)}
-@media(min-width:760px){.price li{grid-template-columns:1fr 1.3fr auto;align-items:baseline}}
-.price h3{font-size:21px;line-height:1.2}
+@media(min-width:760px){.price li{grid-template-columns:minmax(0,1fr) minmax(0,1.3fr) 150px;align-items:start}}
+.price h3{font-size:21px;line-height:1.2;margin:0}
 .price p{margin:0;color:var(--ink-2)}
-.price .sum{font:600 20px/1 var(--display);white-space:nowrap;color:var(--accent)}
+.price .sum{font:600 20px/1.2 var(--display);white-space:nowrap;color:var(--accent)}
+@media(min-width:760px){.price .sum{text-align:right}}
 
 /* как работаю: четыре ровные карточки */
 .steps{display:grid;gap:14px;list-style:none;margin:0;padding:0;counter-reset:s;align-items:stretch}
@@ -158,35 +228,76 @@ footer{padding:22px 0 calc(40px + env(safe-area-inset-bottom));color:var(--ink-3
 <body>
 <nav class="nav" aria-label="Меню">
   <a class="brand" href="#top"><i id="brandInit"></i><span id="brandName"></span></a>
-  <a class="l" href="#works">Работы</a><a class="l" href="#services">Услуги</a><a class="l" href="#how">Как работаю</a>
+  <a class="l" href="#works">Работы</a><a class="l" href="#services">Стоимость</a><a class="l" href="#about">Обо мне</a>
   <a class="btn btn-main" href="#write">Написать</a>
 </nav>
 
 <main class="wrap" id="top">
   <section class="hero">
     <div>
-      <span class="hello" id="hello"></span>
-      <h1 id="h1"></h1>
-      <p class="lead" id="lead"></p>
-      <div class="cta" data-cta></div>
-      <div class="facts" id="facts"></div>
+      <span class="eyebrow">Сайты для малого бизнеса и частных специалистов</span>
+      <h1 id="h1">Сайт, который приводит <em>клиентов</em></h1>
+      <p class="lead" id="lead">Сначала разбираюсь, как устроена ваша работа. Потом собираю <em>демо вашего сайта</em> – вы смотрите результат, а <em>решение принимаете после</em>.</p>
+      <div class="pill"><span>Стоимость <b>от 10 000 ₽</b></span><span>Срок <b>3-5 дней</b></span><span><b>2 круга</b> правок</span></div>
+      <div class="cta"><a class="btn btn-dark" href="#works">Смотреть работы</a><a class="btn btn-ghost" href="#write">Обсудить проект</a></div>
     </div>
     <div class="fan" id="fan" aria-label="Мои работы"></div>
   </section>
 
+  <section class="block" id="why">
+    <div class="block-head reveal"><div><div class="eyebrow">Зачем бизнесу сайт</div><h2>Что сайт делает <em>для вашего бизнеса</em></h2></div></div>
+    <div class="why reveal">
+      <div><span class="n">01</span><h3>Показать услуги, цены и работы</h3><p>Человек <span class="hl">сразу видит</span>, что вы делаете и сколько это стоит, и не пишет «а почём?».</p></div>
+      <div><span class="n">02</span><h3>Вызвать доверие</h3><p>Свой сайт с отзывами и фото <span class="hl">выглядит надёжнее</span>, чем одна карточка на карте.</p></div>
+      <div><span class="n">03</span><h3>Отвечать на вопросы без вас</h3><p>Частые вопросы, условия и адрес <span class="hl">лежат на странице</span>, а не в вашей голове.</p></div>
+      <div><span class="n">04</span><h3>Принимать заявки</h3><p>Кнопка ведёт в ваш мессенджер с готовым сообщением: клиенту <span class="hl">достаточно нажать «отправить»</span>.</p></div>
+      <div><span class="n">05</span><h3>Быть на виду</h3><p>Перед звонком или визитом многие смотрят в интернете. Ваша страница <span class="hl">встречает их первой</span>.</p></div>
+      <div><span class="n">06</span><h3>Работать, пока вы заняты</h3><p>Страница <span class="hl">отвечает клиенту ночью и в выходные</span>, а заявка ждёт вас в мессенджере.</p></div>
+    </div>
+  </section>
+
+  <section class="block" id="quiz">
+    <div class="block-head reveal"><div><div class="eyebrow">Подбор за минуту</div><h2>Три вопроса – и я <em>подскажу, что вам подойдёт</em></h2></div></div>
+    <div class="quiz reveal">
+      <div class="panel">
+        <div class="q"><h3>1. Чем вы занимаетесь?</h3><div class="chips" id="qNiche"></div></div>
+        <div class="q"><h3>2. Что сайт должен делать в первую очередь?</h3><div class="chips" id="qGoal"></div></div>
+        <div class="q"><h3>3. Где вам удобнее общаться?</h3><div class="chips" id="qMsg"></div></div>
+      </div>
+      <div class="result" id="result" aria-live="polite"><h3>Ваш формат появится здесь</h3><p>Выберите нишу и главную задачу сайта – я подскажу формат, цену и срок.</p></div>
+    </div>
+  </section>
+
   <section class="block" id="works">
-    <div class="block-head reveal"><div><div class="eyebrow">Работы</div><h2>Сайты, которые я сделала</h2></div><p id="worksNote"></p></div>
+    <div class="block-head reveal"><div><div class="eyebrow">Мои работы</div><h2>Мои работы: <em>откройте любой и посмотрите вживую</em></h2></div><p id="worksNote"></p></div>
     <div id="cases"></div>
+    <details class="acc" id="worksAcc">
+      <summary><span><span class="t1">Смотреть все работы</span><span class="t2">Скрыть остальные работы</span></span><span class="cnt" id="worksCnt"></span></summary>
+      <div id="casesMore"></div>
+    </details>
   </section>
 
   <section class="block" id="services">
-    <div class="block-head reveal"><div><div class="eyebrow">Услуги и цены</div><h2>Что могу сделать для вас</h2></div><p>Точную цену назову, когда увижу задачу. Демо – бесплатно.</p></div>
+    <div class="block-head reveal"><div><div class="eyebrow">Услуги и цены</div><h2>Стоимость услуг</h2></div><p>Точную цену назову, когда увижу задачу. Демо – бесплатно.</p></div>
     <ul class="price reveal" id="price"></ul>
   </section>
 
   <section class="block" id="how">
     <div class="block-head reveal"><div><div class="eyebrow">Как работаю</div><h2>От демо до сайта на вашем адресе</h2></div></div>
     <ol class="steps reveal" id="steps"></ol>
+  </section>
+
+  <section class="block" id="about">
+    <div class="about reveal">
+      <div class="ph"><img id="aboutPhoto" alt="" width="400" height="400" loading="lazy"></div>
+      <div>
+        <div class="eyebrow">Обо мне</div>
+        <h2 id="aboutName"></h2>
+        <p>Собираю сайты для малого бизнеса и частных специалистов. Сначала разбираюсь, как устроена ваша работа, потом показываю <span class="hl">демо вашего сайта</span>, и решение вы принимаете после.</p>
+        <p>Пишите в удобный мессенджер: отвечаю в течение дня, а правки вношу словами – без технических терминов.</p>
+        <div class="cta" style="margin-top:22px"><a class="btn btn-main" href="#write">Обсудить проект</a></div>
+      </div>
+    </div>
   </section>
 
   <section class="final reveal" id="write">
@@ -209,7 +320,7 @@ footer{padding:22px 0 calc(40px + env(safe-area-inset-bottom));color:var(--ink-3
 <footer class="wrap"><span id="foot"></span><span></span><span>Сайт собран с Claude Code</span></footer>
 <div class="toast" id="toast" role="status"></div>
 
-<script id="data" type="application/json">{"name":"Ирина Александрова","city":"","cityIn":"","photo":"assets/photo.webp","palette":"А","messengers":{"telegram":"alex_irina","whatsapp":"79373917022","max":"79373917022"},"message":"Здравствуйте! Хочу заказать сайт. Посмотрел(а) ваши работы на витрине – расскажите, как начать?","services":[{"title":"Новый сайт-одностраничник","desc":"Сайт под ваш бизнес: оффер, услуги, цены, отзывы и кнопка связи","price":"от 10 000 ₽"},{"title":"Перенос на домен или Тильду","desc":"Размещу сайт на вашем домене или перенесу в Тильду","price":"по запросу"},{"title":"Доработки","desc":"Поправлю тексты, блоки, цвета и вид на телефоне","price":"от 1 000 ₽"}],"cases":[{"title":"Мотор-Плюс","niche":"Автосервис","city":"","url":"https://Iren167.github.io/avtoservis-motor-plus/","folder":"C:\\Users\\PC\\Downloads\\CLAUDE\\poslednie-versii\\avtoservis","kind":"demo","about":"Тёмный сайт автосервиса: сканер диагностики, цена до приезда, запись на конкретное время.","desktop":"assets/case-iren167-github-io-avtoservis-motor-plus-desktop.webp","mobile":"assets/case-iren167-github-io-avtoservis-motor-plus-mobile.webp","lum":44},{"title":"Пудра","niche":"Салон-парикмахерская","city":"Сочи","url":"https://Iren167.github.io/salon-pudra/","folder":"C:\\Users\\PC\\Downloads\\CLAUDE\\poslednie-versii\\salon","kind":"demo","about":"Пудровая палитра, советы по уходу и подбор цены по длине волос.","desktop":"assets/case-iren167-github-io-salon-pudra-desktop.webp","mobile":"assets/case-iren167-github-io-salon-pudra-mobile.webp","lum":220},{"title":"Ворон","niche":"Барбершоп","city":"Тюмень","url":"https://Iren167.github.io/barbershop-voron/","folder":"C:\\Users\\PC\\Downloads\\CLAUDE\\poslednie-versii\\barbershop","kind":"demo","about":"Графит и серебро: 3D-карусель работ, чек визита и запись к своему барберу.","desktop":"assets/case-iren167-github-io-barbershop-voron-desktop.webp","mobile":"assets/case-iren167-github-io-barbershop-voron-mobile.webp","lum":51},{"title":"Лепесток","niche":"Маникюр и педикюр","city":"Омск","url":"https://Iren167.github.io/manikyur-lepestok/","folder":"C:\\Users\\PC\\Downloads\\CLAUDE\\poslednie-versii\\manikyur","kind":"demo","about":"12 оттенков: французский кончик красится в выбранный цвет.","desktop":"assets/case-iren167-github-io-manikyur-lepestok-desktop.webp","mobile":"assets/case-iren167-github-io-manikyur-lepestok-mobile.webp","lum":221},{"title":"Хром Шина","niche":"Шиномонтаж","city":"Казань","url":"https://Iren167.github.io/shinomontazh-hrom-shina/","folder":"C:\\Users\\PC\\Downloads\\CLAUDE\\poslednie-versii\\shinomontazh","kind":"demo","about":"Вращающееся колесо и подбор цены по радиусу: клиент знает сумму до приезда.","desktop":"assets/case-iren167-github-io-shinomontazh-hrom-shina-desktop.webp","mobile":"assets/case-iren167-github-io-shinomontazh-hrom-shina-mobile.webp","lum":39},{"title":"Тамада Фуд","niche":"Грузинская кухня","city":"","url":"https://Iren167.github.io/gruzin-tamada-food/","folder":"C:\\Users\\PC\\Downloads\\CLAUDE\\poslednie-versii\\gruzin-kuhnya","kind":"demo","about":"Хинкали и хачапури на фудкорте: выбор по фото и заказ в 2-3 касания.","desktop":"assets/case-iren167-github-io-gruzin-tamada-food-desktop.webp","mobile":"assets/case-iren167-github-io-gruzin-tamada-food-mobile.webp","lum":220},{"title":"Свой дом","niche":"Каркасные дома и бани","city":"Тверь","url":"https://Iren167.github.io/stroiteli-svoy-dom/","folder":"C:\\Users\\PC\\Downloads\\CLAUDE\\poslednie-versii\\stroiteli","kind":"demo","about":"Пять этапов строительства, смета в договоре, оплата после приёмки каждого этапа.","desktop":"assets/case-iren167-github-io-stroiteli-svoy-dom-desktop.webp","mobile":"assets/case-iren167-github-io-stroiteli-svoy-dom-mobile.webp","lum":157},{"title":"Амелия","niche":"Цветы и букеты","city":"Ярославль","url":"https://Iren167.github.io/cvety-amelia/","folder":"C:\\Users\\PC\\Downloads\\CLAUDE\\poslednie-versii\\cvety-vs34","kind":"demo","about":"Конструктор букета с бумажным чеком и заказом в WhatsApp.","desktop":"assets/case-iren167-github-io-cvety-amelia-desktop.webp","mobile":"assets/case-iren167-github-io-cvety-amelia-mobile.webp","lum":228},{"title":"Контур Ремонт","niche":"Ремонт квартир","city":"Самара","url":"https://Iren167.github.io/remont-kontur/","folder":"C:\\Users\\PC\\Downloads\\CLAUDE\\poslednie-versii\\remont","kind":"demo","about":"План по неделям и фотоотчёт: сцена «входим в комнату» на скролле.","desktop":"assets/case-iren167-github-io-remont-kontur-desktop.webp","mobile":"assets/case-iren167-github-io-remont-kontur-mobile.webp","lum":46},{"title":"Ритм","niche":"Фитнес-студия","city":"Воронеж","url":"https://Iren167.github.io/fitnes-ritm/","folder":"C:\\Users\\PC\\Downloads\\CLAUDE\\poslednie-versii\\fitnes-vs44","kind":"demo","about":"Чек на месяц занятий, расписание групп по дням и блок тренера.","desktop":"assets/case-iren167-github-io-fitnes-ritm-desktop.webp","mobile":"assets/case-iren167-github-io-fitnes-ritm-mobile.webp","lum":226},{"title":"Лекало","niche":"Ателье","city":"Рязань","url":"https://Iren167.github.io/atelie-lekalo/","folder":"C:\\Users\\PC\\Downloads\\CLAUDE\\poslednie-versii\\atelie-vs37","kind":"demo","about":"Живая квитанция на первом экране: цена и срок известны до визита.","desktop":"assets/case-iren167-github-io-atelie-lekalo-desktop.webp","mobile":"assets/case-iren167-github-io-atelie-lekalo-mobile.webp","lum":99},{"title":"Чистовик","niche":"Клининг","city":"Калуга","url":"https://Iren167.github.io/klining-chistovik/","folder":"C:\\Users\\PC\\Downloads\\CLAUDE\\poslednie-versii\\klining-vs16","kind":"demo","about":"Акт приёмки на 36 пунктов с галочками и расчёт по метражу.","desktop":"assets/case-iren167-github-io-klining-chistovik-desktop.webp","mobile":"assets/case-iren167-github-io-klining-chistovik-mobile.webp","lum":209},{"title":"Сухо и Светло","niche":"Сантехник и электрик","city":"Ижевск","url":"https://Iren167.github.io/santehnik-suho-svetlo/","folder":"C:\\Users\\PC\\Downloads\\CLAUDE\\poslednie-versii\\santehnik-vs20","kind":"demo","about":"Сантехник на дом: приезд интервалом, цена на типовую работу.","desktop":"assets/case-iren167-github-io-santehnik-suho-svetlo-desktop.webp","mobile":"assets/case-iren167-github-io-santehnik-suho-svetlo-mobile.webp","lum":43},{"title":"Своими словами","niche":"Репетитор английского","city":"Томск","url":"https://Iren167.github.io/repetitor-svoimi-slovami/","folder":"C:\\Users\\PC\\Downloads\\CLAUDE\\poslednie-versii\\repetitor-vs40","kind":"demo","about":"План на 8 недель, пробное занятие и цена известна до оплаты.","desktop":"assets/case-iren167-github-io-repetitor-svoimi-slovami-desktop.webp","mobile":"assets/case-iren167-github-io-repetitor-svoimi-slovami-mobile.webp","lum":204},{"title":"Крылья","niche":"Студия воздушных полотен","city":"Самара","url":"https://Iren167.github.io/tancy-krylya/","folder":"C:\\Users\\PC\\Downloads\\CLAUDE\\poslednie-versii\\tancy-krylya","kind":"demo","about":"Студия воздушных полотен и танцев: группы до 8 человек, пробное по записи.","desktop":"assets/case-iren167-github-io-tancy-krylya-desktop.webp","mobile":"assets/case-iren167-github-io-tancy-krylya-mobile.webp","lum":169}],"legal":{"status":"самозанятый","fio":"","inn":"","ogrnip":"","email":""}}</script>
+<script id="data" type="application/json">{"name":"Ирина Александрова","city":"","cityIn":"","photo":"assets/photo.webp","palette":"А","messengers":{"telegram":"alex_irina","whatsapp":"79373917022","max":"79373917022"},"message":"Здравствуйте! Хочу заказать сайт. Посмотрел(а) ваши работы на витрине – расскажите, как начать?","services":[{"title":"Новый сайт-одностраничник","desc":"Сайт под ваш бизнес: оффер, услуги, цены, отзывы и кнопка связи","price":"от 10 000 ₽"},{"title":"Перенос на домен или Тильду","desc":"Размещу сайт на вашем домене или перенесу в Тильду","price":"от 3 000 ₽"},{"title":"Доработки","desc":"Поправлю тексты, блоки, цвета и вид на телефоне","price":"от 1 000 ₽"}],"cases":[{"title":"Мотор-Плюс","niche":"Автосервис","city":"","url":"https://Iren167.github.io/avtoservis-motor-plus/","folder":"C:\\Users\\PC\\Downloads\\CLAUDE\\poslednie-versii\\avtoservis","kind":"demo","about":"Тёмный сайт автосервиса: сканер диагностики, цена до приезда, запись на конкретное время.","desktop":"assets/case-iren167-github-io-avtoservis-motor-plus-desktop.webp","mobile":"assets/case-iren167-github-io-avtoservis-motor-plus-mobile.webp","lum":44},{"title":"Пудра","niche":"Салон-парикмахерская","city":"Сочи","url":"https://Iren167.github.io/salon-pudra/","folder":"C:\\Users\\PC\\Downloads\\CLAUDE\\poslednie-versii\\salon","kind":"demo","about":"Пудровая палитра, советы по уходу и подбор цены по длине волос.","desktop":"assets/case-iren167-github-io-salon-pudra-desktop.webp","mobile":"assets/case-iren167-github-io-salon-pudra-mobile.webp","lum":220},{"title":"Ворон","niche":"Барбершоп","city":"Тюмень","url":"https://Iren167.github.io/barbershop-voron/","folder":"C:\\Users\\PC\\Downloads\\CLAUDE\\poslednie-versii\\barbershop","kind":"demo","about":"Графит и серебро: 3D-карусель работ, чек визита и запись к своему барберу.","desktop":"assets/case-iren167-github-io-barbershop-voron-desktop.webp","mobile":"assets/case-iren167-github-io-barbershop-voron-mobile.webp","lum":51},{"title":"Лепесток","niche":"Маникюр и педикюр","city":"Омск","url":"https://Iren167.github.io/manikyur-lepestok/","folder":"C:\\Users\\PC\\Downloads\\CLAUDE\\poslednie-versii\\manikyur","kind":"demo","about":"12 оттенков: французский кончик красится в выбранный цвет.","desktop":"assets/case-iren167-github-io-manikyur-lepestok-desktop.webp","mobile":"assets/case-iren167-github-io-manikyur-lepestok-mobile.webp","lum":221},{"title":"Хром Шина","niche":"Шиномонтаж","city":"Казань","url":"https://Iren167.github.io/shinomontazh-hrom-shina/","folder":"C:\\Users\\PC\\Downloads\\CLAUDE\\poslednie-versii\\shinomontazh","kind":"demo","about":"Вращающееся колесо и подбор цены по радиусу: клиент знает сумму до приезда.","desktop":"assets/case-iren167-github-io-shinomontazh-hrom-shina-desktop.webp","mobile":"assets/case-iren167-github-io-shinomontazh-hrom-shina-mobile.webp","lum":39},{"title":"Тамада Фуд","niche":"Грузинская кухня","city":"","url":"https://Iren167.github.io/gruzin-tamada-food/","folder":"C:\\Users\\PC\\Downloads\\CLAUDE\\poslednie-versii\\gruzin-kuhnya","kind":"demo","about":"Хинкали и хачапури на фудкорте: выбор по фото и заказ в 2-3 касания.","desktop":"assets/case-iren167-github-io-gruzin-tamada-food-desktop.webp","mobile":"assets/case-iren167-github-io-gruzin-tamada-food-mobile.webp","lum":220},{"title":"Свой дом","niche":"Каркасные дома и бани","city":"Тверь","url":"https://Iren167.github.io/stroiteli-svoy-dom/","folder":"C:\\Users\\PC\\Downloads\\CLAUDE\\poslednie-versii\\stroiteli","kind":"demo","about":"Пять этапов строительства, смета в договоре, оплата после приёмки каждого этапа.","desktop":"assets/case-iren167-github-io-stroiteli-svoy-dom-desktop.webp","mobile":"assets/case-iren167-github-io-stroiteli-svoy-dom-mobile.webp","lum":157},{"title":"Амелия","niche":"Цветы и букеты","city":"Ярославль","url":"https://Iren167.github.io/cvety-amelia/","folder":"C:\\Users\\PC\\Downloads\\CLAUDE\\poslednie-versii\\cvety-vs34","kind":"demo","about":"Конструктор букета с бумажным чеком и заказом в WhatsApp.","desktop":"assets/case-iren167-github-io-cvety-amelia-desktop.webp","mobile":"assets/case-iren167-github-io-cvety-amelia-mobile.webp","lum":228},{"title":"Контур Ремонт","niche":"Ремонт квартир","city":"Самара","url":"https://Iren167.github.io/remont-kontur/","folder":"C:\\Users\\PC\\Downloads\\CLAUDE\\poslednie-versii\\remont","kind":"demo","about":"План по неделям и фотоотчёт: сцена «входим в комнату» на скролле.","desktop":"assets/case-iren167-github-io-remont-kontur-desktop.webp","mobile":"assets/case-iren167-github-io-remont-kontur-mobile.webp","lum":46},{"title":"Ритм","niche":"Фитнес-студия","city":"Воронеж","url":"https://Iren167.github.io/fitnes-ritm/","folder":"C:\\Users\\PC\\Downloads\\CLAUDE\\poslednie-versii\\fitnes-vs44","kind":"demo","about":"Чек на месяц занятий, расписание групп по дням и блок тренера.","desktop":"assets/case-iren167-github-io-fitnes-ritm-desktop.webp","mobile":"assets/case-iren167-github-io-fitnes-ritm-mobile.webp","lum":226},{"title":"Лекало","niche":"Ателье","city":"Рязань","url":"https://Iren167.github.io/atelie-lekalo/","folder":"C:\\Users\\PC\\Downloads\\CLAUDE\\poslednie-versii\\atelie-vs37","kind":"demo","about":"Живая квитанция на первом экране: цена и срок известны до визита.","desktop":"assets/case-iren167-github-io-atelie-lekalo-desktop.webp","mobile":"assets/case-iren167-github-io-atelie-lekalo-mobile.webp","lum":99},{"title":"Чистовик","niche":"Клининг","city":"Калуга","url":"https://Iren167.github.io/klining-chistovik/","folder":"C:\\Users\\PC\\Downloads\\CLAUDE\\poslednie-versii\\klining-vs16","kind":"demo","about":"Акт приёмки на 36 пунктов с галочками и расчёт по метражу.","desktop":"assets/case-iren167-github-io-klining-chistovik-desktop.webp","mobile":"assets/case-iren167-github-io-klining-chistovik-mobile.webp","lum":209},{"title":"Сухо и Светло","niche":"Сантехник и электрик","city":"Ижевск","url":"https://Iren167.github.io/santehnik-suho-svetlo/","folder":"C:\\Users\\PC\\Downloads\\CLAUDE\\poslednie-versii\\santehnik-vs20","kind":"demo","about":"Сантехник на дом: приезд интервалом, цена на типовую работу.","desktop":"assets/case-iren167-github-io-santehnik-suho-svetlo-desktop.webp","mobile":"assets/case-iren167-github-io-santehnik-suho-svetlo-mobile.webp","lum":43},{"title":"Своими словами","niche":"Репетитор английского","city":"Томск","url":"https://Iren167.github.io/repetitor-svoimi-slovami/","folder":"C:\\Users\\PC\\Downloads\\CLAUDE\\poslednie-versii\\repetitor-vs40","kind":"demo","about":"План на 8 недель, пробное занятие и цена известна до оплаты.","desktop":"assets/case-iren167-github-io-repetitor-svoimi-slovami-desktop.webp","mobile":"assets/case-iren167-github-io-repetitor-svoimi-slovami-mobile.webp","lum":204},{"title":"Крылья","niche":"Студия воздушных полотен","city":"Самара","url":"https://Iren167.github.io/tancy-krylya/","folder":"C:\\Users\\PC\\Downloads\\CLAUDE\\poslednie-versii\\tancy-krylya","kind":"demo","about":"Студия воздушных полотен и танцев: группы до 8 человек, пробное по записи.","desktop":"assets/case-iren167-github-io-tancy-krylya-desktop.webp","mobile":"assets/case-iren167-github-io-tancy-krylya-mobile.webp","lum":169}],"legal":{"status":"самозанятый","fio":"","inn":"","ogrnip":"","email":""}}</script>
 <script>
 (() => {
   const D = JSON.parse(document.getElementById('data').textContent);
@@ -219,9 +330,8 @@ footer{padding:22px 0 calc(40px + env(safe-area-inset-bottom));color:var(--ink-3
   const init = (D.name || '?').split(' ').map((w) => w[0]).join('').slice(0, 2).toUpperCase();
   const ava = D.photo ? `<img src="${esc(D.photo)}" alt="">` : `<b>${esc(init)}</b>`;
   $('brandInit').textContent = init; $('brandName').textContent = D.name;
-  $('hello').innerHTML = `${ava}<span>Привет, я ${esc(first)}</span>`;
-  $('h1').innerHTML = D.h1 || `Сайты для малого бизнеса${D.city ? ` в <em>${esc(D.cityIn || D.city)}</em>` : ''}`;
-  $('lead').textContent = D.lead || 'Соберу готовое демо вашего сайта до разговора – вы смотрите результат, а потом решаете.';
+  $('aboutName').textContent = D.name;
+  if (D.photo) { $('aboutPhoto').src = D.photo; $('aboutPhoto').alt = D.name; } else { $('about').hidden = true; }
   $('chatAva').innerHTML = ava; $('chatName').textContent = D.name;
   $('bubble').textContent = D.message;
   $('foot').textContent = `© ${new Date().getFullYear()} ${D.name}${D.city ? ', ' + D.city : ''}`;
@@ -230,11 +340,6 @@ footer{padding:22px 0 calc(40px + env(safe-area-inset-bottom));color:var(--ink-3
   const real = cases.filter((c) => c.kind === 'real').length;
   const niches = [...new Set(cases.map((c) => c.niche).filter(Boolean))];
   const word = (n, a, b, c) => { const m = n % 10, h = n % 100; return m === 1 && h !== 11 ? a : m >= 2 && m <= 4 && (h < 12 || h > 14) ? b : c; };
-  $('facts').innerHTML = [
-    cases.length ? `<span><b>${cases.length}</b>${word(cases.length, 'сайт', 'сайта', 'сайтов')} в работах</span>` : '',
-    real ? `<span><b>${real}</b>${word(real, 'реальный заказ', 'реальных заказа', 'реальных заказов')}</span>` : '',
-    niches.length ? `<span><b>${niches.length}</b>${word(niches.length, 'ниша', 'ниши', 'ниш')}</span>` : ''
-  ].join('');
   $('worksNote').textContent = real ? '«Реальный заказ» – за сайт заплатил владелец. «Демо-проект» – собран на пробу.' : 'Демо-проекты: так выглядят сайты, которые я собираю для бизнеса.';
 
   const msg = D.message || 'Здравствуйте! Хочу заказать сайт.';
@@ -258,22 +363,30 @@ footer{padding:22px 0 calc(40px + env(safe-area-inset-bottom));color:var(--ink-3
   document.addEventListener('click', (e) => {
     const a = e.target.closest('[data-copy]'); if (!a) return;
     e.preventDefault();
-    try { navigator.clipboard.writeText(msg); } catch (_) {}
+    try { navigator.clipboard.writeText(a.dataset.text || msg); } catch (_) {}
     toast(a.dataset.phone ? `Текст скопирован. Откройте MAX и напишите на ${a.dataset.phone} – вставьте текст` : 'Текст сообщения скопирован – вставьте его в чат MAX');
   });
 
   const phone = (c, dur) => `<div class="phone" style="--dur:${dur}s"><div class="notch"></div><div class="screen">${c.mobile ? `<img src="${esc(c.mobile)}" alt="Сайт ${esc(c.title)} на телефоне" loading="lazy" data-shift>` : ''}</div></div>`;
+  // первый экран: ноутбук листает главные экраны всех сайтов, телефон - сайт про цветы
   const fan = $('fan');
-  const shot = cases.filter((c) => c.mobile);
-  // на первом экране: шиномонтаж по центру, салон слева, ремонт справа
-  const pick = (u) => shot.find((c) => (c.url || '').includes(u));
-  const trio = [pick('shinomontazh'), pick('salon-pudra'), pick('remont-kontur')].filter(Boolean);
-  const heroShots = trio.length === 3 ? trio : shot.slice(0, 3);
-  if (shot.length) fan.innerHTML = heroShots.map((c, i) => phone(c, 20 + i * 4)).join('');
-  else { fan.classList.add('empty'); fan.textContent = 'Здесь появятся ваши работы'; }
+  const deskShots = cases.filter((c) => c.desktop);
+  const flowers = cases.find((c) => (c.url || '').includes('cvety') && c.mobile) || cases.find((c) => c.mobile);
+  if (deskShots.length) {
+    fan.innerHTML = `<div class="hmock"><div class="hlaptop"><div class="hlid"><div class="hscr" id="hscr">${deskShots.map((c, i) => `<img src="${esc(c.desktop)}" alt="Сайт ${esc(c.title)}"${i === 0 ? ' class="on"' : ''}>`).join('')}<span class="hcap" id="hcap">${esc(deskShots[0].title)} · ${esc(deskShots[0].niche || '')}</span></div></div><div class="hbase"></div></div>${flowers ? phone(flowers, 26).replace('class="phone"', 'class="phone hphone"') : ''}</div>`;
+    const imgs = [...fan.querySelectorAll('#hscr img')], cap = $('hcap');
+    let k = 0;
+    if (imgs.length > 1 && !matchMedia('(prefers-reduced-motion:reduce)').matches) setInterval(() => {
+      imgs[k].classList.remove('on'); k = (k + 1) % imgs.length; imgs[k].classList.add('on');
+      cap.textContent = `${deskShots[k].title} · ${deskShots[k].niche || ''}`;
+    }, 3200);
+  } else { fan.classList.add('empty'); fan.textContent = 'Здесь появятся ваши работы'; }
 
   // работы: телефон слева (в наклоне), ноутбук ровный
-  $('cases').innerHTML = cases.map((c, i) => `
+  const FEATURED = ['manikyur', 'shinomontazh', 'tancy'];
+  const top3 = FEATURED.map((u) => cases.find((c) => (c.url || '').includes(u))).filter(Boolean);
+  const ordered = [...top3, ...cases.filter((c) => !top3.includes(c))];
+  const caseHtml = (c, i) => `
     <article class="case reveal">
       <div class="devices">
         ${c.desktop ? `<div class="laptop"><div class="lid"><div class="scr"><img src="${esc(c.desktop)}" alt="Сайт ${esc(c.title)}" loading="lazy"></div></div><div class="deck"></div></div>` : ''}
@@ -286,7 +399,10 @@ footer{padding:22px 0 calc(40px + env(safe-area-inset-bottom));color:var(--ink-3
         ${c.about ? `<p class="about">${esc(c.about)}</p>` : ''}
         ${c.url ? `<a class="btn open" href="${esc(c.url)}" target="_blank" rel="noopener">Открыть сайт →</a>` : ''}
       </div>
-    </article>`).join('') || '<p style="color:var(--ink-3)">Работы появятся здесь.</p>';
+    </article>`;
+  $('cases').innerHTML = ordered.slice(0, top3.length).map(caseHtml).join('') || '<p style="color:var(--ink-3)">Работы появятся здесь.</p>';
+  $('casesMore').innerHTML = ordered.slice(top3.length).map((c, i) => caseHtml(c, i + top3.length)).join('');
+  if (ordered.length <= top3.length) $('worksAcc').hidden = true;
 
   $('price').innerHTML = (D.services || []).map((s) => `<li><h3>${esc(s.title)}</h3><p>${esc(s.desc || '')}</p><span class="sum">${esc(s.price || 'по запросу')}</span></li>`).join('');
   $('steps').innerHTML = (D.steps || [
@@ -296,10 +412,59 @@ footer{padding:22px 0 calc(40px + env(safe-area-inset-bottom));color:var(--ink-3
     ['Готово', 'Сайт работает и приводит заявки. Остаюсь на связи.']
   ]).map(([t, p]) => `<li><h3>${esc(t)}</h3><p>${esc(p)}</p></li>`).join('');
 
+  const moreN = ordered.length - top3.length;
+  $('worksCnt').textContent = `ещё ${moreN} ${word(moreN, 'сайт', 'сайта', 'сайтов')}`;
+
+  // подбор за минуту
+  const NICHES = [
+    ['avto', 'Автосервис и шиномонтаж', ['avtoservis', 'shinomontazh']],
+    ['beauty', 'Парикмахерские и барбершопы', ['barbershop', 'salon']],
+    ['nail', 'Ногти и красота', ['manikyur', 'salon']],
+    ['cvety', 'Цветы', ['cvety']],
+    ['stroy', 'Строительство и ремонт', ['remont', 'stroiteli']],
+    ['clean', 'Клининг', ['klining']],
+    ['master', 'Сантехник, электрик, мастер на дом', ['santehnik']],
+    ['edu', 'Репетитор и обучение', ['repetitor']],
+    ['sport', 'Фитнес и танцы', ['fitnes', 'tancy']],
+    ['atelie', 'Ателье', ['atelie']],
+    ['food', 'Кафе и доставка еды', ['gruzin']],
+    ['other', 'Другое', []]
+  ];
+  const GOALS = [
+    ['rec', 'Чтобы записывались', 'Сайт с онлайн-записью', 'Выбор услуги и удобного времени, кнопка записи в ваш мессенджер. Клиент записывается сам, вы не отвечаете на одни и те же вопросы.', 'от 10 000 ₽', '3-5 дней'],
+    ['ord', 'Чтобы оставляли заявки', 'Сайт с заявкой и расчётом цены', 'Клиент прикидывает цену на странице и отправляет заявку с готовым сообщением. Вы получаете уже понятную задачу.', 'от 10 000 ₽', '3-5 дней'],
+    ['show', 'Показать работы и цены', 'Сайт-витрина работ и цен', 'Фото работ, понятный прайс, отзывы и кнопка связи. Человек сразу видит, что вы делаете и сколько это стоит.', 'от 10 000 ₽', '3-5 дней'],
+    ['card', 'Просто быть в интернете', 'Сайт-визитка', 'Короткая страница: кто вы, чем занимаетесь, где найти и как связаться. Лёгкий способ быть на виду.', 'от 10 000 ₽', '3 дня']
+  ];
+  const MSGR = links.filter((l) => ['telegram', 'whatsapp', 'max'].includes(l.k));
+  const chipHtml = (arr) => arr.map(([k, t]) => `<button class="chip" type="button" aria-pressed="false" data-v="${esc(k)}">${esc(t)}</button>`).join('');
+  $('qNiche').innerHTML = chipHtml(NICHES);
+  $('qGoal').innerHTML = chipHtml(GOALS);
+  $('qMsg').innerHTML = chipHtml(MSGR.map((l) => [l.k, l.label]));
+  const pickQ = { niche: '', goal: '', msg: MSGR[0] ? MSGR[0].k : '' };
+  const setPressed = (box, v) => box.querySelectorAll('.chip').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === v)));
+  setPressed($('qMsg'), pickQ.msg);
+  const renderResult = () => {
+    const box = $('result');
+    const n = NICHES.find((x) => x[0] === pickQ.niche), g = GOALS.find((x) => x[0] === pickQ.goal);
+    if (!n || !g) { box.innerHTML = '<h3>Ваш формат появится здесь</h3><p>Выберите нишу и главную задачу сайта – я подскажу формат, цену и срок.</p>'; return; }
+    const ex = n[2].map((u) => cases.find((c) => (c.url || '').includes(u))).find(Boolean);
+    const m = MSGR.find((l) => l.k === pickQ.msg) || MSGR[0];
+    const text = `Здравствуйте! Хочу сайт. Ниша: ${n[1]}. Задача: ${g[1].toLowerCase()}. Подсмотрела в подборе формат «${g[2]}» – расскажите, как начать?`;
+    const copyAttr = m && m.copy ? ` data-copy data-phone="${esc(m.phone || '')}" data-text="${esc(text)}"` : ' target="_blank" rel="noopener"';
+    const href = m ? (m.copy ? '#write' : m.href.replace(/(text=)[^&]*/, `$1${encodeURIComponent(text)}`)) : '#write';
+    box.innerHTML = `<h3>${esc(g[2])}</h3><p>${esc(g[3])}</p><div class="sum">${esc(g[4])}</div><p>Срок: <b>${esc(g[5])}</b>, 2 круга правок. Сначала покажу демо - решение примете после.</p>${ex ? `<p>Похожий пример: <a class="ex" href="${esc(ex.url)}" target="_blank" rel="noopener">${esc(ex.title)} →</a></p>` : ''}<a class="btn btn-main" href="${esc(href)}"${copyAttr}>${m ? `Обсудить в ${esc(m.label)}` : 'Обсудить проект'}</a>`;
+  };
+  [['qNiche', 'niche'], ['qGoal', 'goal'], ['qMsg', 'msg']].forEach(([id, key]) => $(id).addEventListener('click', (e) => {
+    const b = e.target.closest('.chip'); if (!b) return;
+    pickQ[key] = b.dataset.v; setPressed($(id), b.dataset.v); renderResult();
+  }));
+
   const fit = (img) => { const s = img.parentElement; const h = img.getBoundingClientRect().height, sh = s.getBoundingClientRect().height; if (h > sh) img.style.setProperty('--shift', `${-((h - sh) / h) * 100}%`); };
   const fitAll = () => document.querySelectorAll('[data-shift]').forEach((img) => { img.style.removeProperty('--shift'); fit(img); });
   document.querySelectorAll('[data-shift]').forEach((img) => { if (img.complete) fit(img); else img.addEventListener('load', () => fit(img)); });
   addEventListener('resize', fitAll);
+  $('worksAcc').addEventListener('toggle', () => setTimeout(fitAll, 150));
   const io = new IntersectionObserver((es) => es.forEach((e) => {
     if (e.target.classList.contains('phone')) e.target.classList.toggle('live', e.isIntersecting);
     else if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
